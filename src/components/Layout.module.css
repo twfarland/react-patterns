@@ -1,0 +1,80 @@
+:root {
+  --sidebar-width: 200px;
+  --header-height: 50px; /* this is overridden by dynamic style properties in the component */
+  --z-level-1: 10;
+  --z-level-2: 20;
+}
+
+.layout {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
+
+.header {
+  position: fixed;
+  z-index: var(--z-level-2);
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: var(--header-height);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: var(--z-level-1);
+  padding-top: var(--header-height);
+  top: 0;
+  left: 0px;
+  bottom: 0px;
+  width: var(--sidebar-width);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.open {
+  transform: translateX(0%);
+}
+
+.sidebar.closed {
+  transform: translateX(-75%);
+}
+
+.sidebarToggle {
+  padding: 10px;
+  text-align: right;
+}
+
+.content {
+  padding-top: var(--header-height);
+  padding-left: 50px;
+  transition: padding-left 0.3s ease-in-out;
+}
+
+/*
+    On small screens, sidebar overlaps content when it is open
+    On large screens, sidebar is always open and pushes out content, and there is no toggle
+*/
+
+@media (min-width: 768px) {
+  .content {
+    padding-left: var(--sidebar-width);
+  }
+  .sidebar.closed {
+    transform: translateX(0%);
+  }
+  .sidebarToggle {
+    display: none;
+  }
+}
